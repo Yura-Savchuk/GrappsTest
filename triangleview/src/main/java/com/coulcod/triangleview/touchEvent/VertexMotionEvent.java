@@ -1,6 +1,7 @@
 package com.coulcod.triangleview.touchEvent;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.coulcod.triangleview.PercentagePoint;
@@ -61,8 +62,14 @@ public class VertexMotionEvent {
         float x = event.getX();
         float y = event.getY();
         PointMapper mapper = pointFind.pointMapper;
-        point.x = mapper.xToPercentage(x);
-        point.y = mapper.yToPercentage(y);
+        float newX = mapper.xToPercentage(x);
+        if (newX >= 0 && newX <= 1) {
+            point.x = newX;
+        }
+        float newY = mapper.yToPercentage(y);
+        if (newY >= 0 && newY <= 1) {
+            point.y = newY;
+        }
         listener.onTriangleChange();
     }
 
