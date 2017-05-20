@@ -4,6 +4,7 @@ import com.coulcod.grappstest.view.ITrianglePreviewView;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -34,9 +35,10 @@ public class TrianglePreviewPresenter implements ITrianglePreviewPresenter {
 
     @Override
     public void setupUpdateArea() {
+        view.updateArea();
         Subscription subscription = updateTimer.updateAreaText()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> view.updateArea());
+                .subscribe(aLong -> view.updateArea(), Throwable::printStackTrace);
         compositeSubscr.add(subscription);
     }
 
@@ -44,7 +46,7 @@ public class TrianglePreviewPresenter implements ITrianglePreviewPresenter {
     public void setupUpdateTimer() {
         Subscription subscription = updateTimer.updateTimerLeft()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> view.setUpdateTimeLeft(aLong));
+                .subscribe(aLong -> view.setUpdateTimeLeft(aLong), Throwable::printStackTrace);
         compositeSubscr.add(subscription);
     }
 

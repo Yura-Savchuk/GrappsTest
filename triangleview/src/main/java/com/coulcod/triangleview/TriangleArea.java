@@ -18,7 +18,7 @@ public class TriangleArea {
 
     /** Calculate triangle area by Herona formula.
      */
-    public static TriangleArea create(@NonNull Triangle triangle, PointMapper mapper) {
+    static TriangleArea create(@NonNull Triangle triangle, PointMapper mapper) {
         int x1 = mapper.xPointToPx(triangle.point1.x);
         int y1 = mapper.yPointToPx(triangle.point1.y);
         int x2 = mapper.xPointToPx(triangle.point2.x);
@@ -31,6 +31,10 @@ public class TriangleArea {
         double p = (a+b+c)/2;
         double area = Math.sqrt(p*(p-a)*(p-b)*(p-c));
         return new TriangleArea((int) area);
+    }
+
+    static TriangleArea empty() {
+        return new TriangleArea(0);
     }
 
     public int getValue() {

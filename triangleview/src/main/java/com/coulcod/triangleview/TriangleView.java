@@ -64,7 +64,7 @@ public class TriangleView extends View implements OnTriangleChangeListener {
 
     public TriangleArea getArea() {
         if (!pointMapper.isSizeExist()) {
-            throw new RuntimeException("Triangle area can't be calculated before the view size established.");
+            return TriangleArea.empty();
         }
         return TriangleArea.create(triangle, pointMapper);
     }
