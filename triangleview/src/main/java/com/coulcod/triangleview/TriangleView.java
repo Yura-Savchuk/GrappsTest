@@ -13,17 +13,20 @@ import android.view.View;
 
 import com.coulcod.triangleview.draw.DrawTriangle;
 import com.coulcod.triangleview.draw.DrawVertexHandle;
+import com.coulcod.triangleview.touchEvent.OnTriangleChangeListener;
+import com.coulcod.triangleview.touchEvent.VertexMotionEvent;
 
 /**
  * Created by {@author coulcod} on 20.05.17.
  */
 
-public class TriangleView extends View {
+public class TriangleView extends View implements OnTriangleChangeListener {
 
     private Triangle triangle;
     private Drawable vertexHandle;
     private final DrawTriangle drawTriangle = new DrawTriangle();
     private final DrawVertexHandle drawVertexHandle = new DrawVertexHandle();
+    private final VertexMotionEvent vertexMotionEvent = new VertexMotionEvent(this);
 
     public TriangleView(Context context) {
         this(context, null);
@@ -41,7 +44,9 @@ public class TriangleView extends View {
         triangle = TriangleCreate.fromTypeArray(a);
         int handleDrawableRes = a.getInt(R.styleable.TriangleView_handleDrawable, R.drawable.ic_dot_and_circle);
         vertexHandle = ContextCompat.getDrawable(getContext(), handleDrawableRes);
-        drawVertexHandle.setHandleSize(vertexHandle.getIntrinsicHeight());
+        int handlerSize = vertexHandle.getIntrinsicHeight();
+        drawVertexHandle.setHandleSize(handlerSize);
+        vertexMotionEvent.setHandleSize(handlerSize);
         a.recycle();
     }
 
@@ -50,6 +55,7 @@ public class TriangleView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         drawTriangle.setViewSize(w, h);
         drawVertexHandle.setViewSize(w, h);
+        vertexMotionEvent.setViewSize(w, h);
     }
 
     @Override
@@ -60,7 +66,12 @@ public class TriangleView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
+        vertexMotionEvent.onTouchEvent(event, triangle);
         return true;
+    }
+
+    @Override
+    public void onTriangleChange() {
+        invalidate();
     }
 }

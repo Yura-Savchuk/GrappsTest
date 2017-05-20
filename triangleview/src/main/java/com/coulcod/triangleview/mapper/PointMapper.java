@@ -44,4 +44,11 @@ public class PointMapper {
         return yPointToPx(percentageY) + handleSize/2;
     }
 
+    public float xToPercentage(float x) {
+        return x / ((float) viewWidth);
+    }
+
+    public float yToPercentage(float y) {
+        return y / ((float) viewHeight);
+    }
 }
