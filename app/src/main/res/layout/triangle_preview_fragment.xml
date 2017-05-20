@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:triangle="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.coulcod.triangleview.TriangleView
+        android:id="@+id/triangleView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        triangle:percentagePoint1x="0.5"
+        triangle:percentagePoint1y="0.1"
+        triangle:percentagePoint2x="0.1"
+        triangle:percentagePoint2y="0.9"
+        triangle:percentagePoint3x="0.9"
+        triangle:percentagePoint3y="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>
