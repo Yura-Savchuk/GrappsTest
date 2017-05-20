@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GrappsTest</string>
+    <string name="last_triangle_area_d_px">Last Triangle Area: %d px</string>
+    <string name="next_area_update_in_d">Next area update in %d …</string>
 </resources>

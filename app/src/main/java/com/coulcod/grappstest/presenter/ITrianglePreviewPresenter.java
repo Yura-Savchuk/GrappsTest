@@ -11,4 +11,7 @@ public interface ITrianglePreviewPresenter {
     void bindView(ITrianglePreviewView view);
     void unBindView();
 
+    void setupUpdateArea();
+    void setupUpdateTimer();
+
 }

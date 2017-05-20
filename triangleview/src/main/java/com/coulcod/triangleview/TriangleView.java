@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.coulcod.triangleview.draw.DrawTriangle;
 import com.coulcod.triangleview.draw.DrawVertexHandle;
+import com.coulcod.triangleview.mapper.PointMapper;
 import com.coulcod.triangleview.touchEvent.OnTriangleChangeListener;
 import com.coulcod.triangleview.touchEvent.VertexMotionEvent;
 
@@ -28,12 +29,11 @@ public class TriangleView extends View implements OnTriangleChangeListener {
     private static final String STATE_PARAM_SUPER_STATE = "super_state";
     private static final String STATE_PARAM_TRIANGLE = "triangle";
     private static final String STATE_PARAM_HANDLE_DRAWABLE_RES = "handle_drawable_res";
-    private static final String STATE_PARAM_HANDLE_SIZE = "handle_size";
 
     private Triangle triangle;
     private int handleDrawableRes;
     private Drawable vertexHandle;
-    private int handleSize;
+    private final PointMapper pointMapper = new PointMapper();
     private final DrawTriangle drawTriangle = new DrawTriangle();
     private final DrawVertexHandle drawVertexHandle = new DrawVertexHandle();
     private final VertexMotionEvent vertexMotionEvent = new VertexMotionEvent(this);
@@ -58,15 +58,22 @@ public class TriangleView extends View implements OnTriangleChangeListener {
         a.recycle();
     }
 
-    public void setHandleSize(@Px int size) {
-        handleSize = size;
+    private void setHandleSize(int size) {
         drawVertexHandle.setHandleSize(size);
         vertexMotionEvent.setHandleSize(size);
+    }
+
+    public TriangleArea getArea() {
+        if (!pointMapper.isSizeExist()) {
+            throw new RuntimeException("Triangle area can't be calculated before the view size established.");
+        }
+        return TriangleArea.create(triangle, pointMapper);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        pointMapper.setSize(w, h);
         drawTriangle.setViewSize(w, h);
         drawVertexHandle.setViewSize(w, h);
         vertexMotionEvent.setViewSize(w, h);
@@ -96,7 +103,6 @@ public class TriangleView extends View implements OnTriangleChangeListener {
         Bundle bundle = new Bundle();
         bundle.putParcelable(STATE_PARAM_TRIANGLE, triangle);
         bundle.putInt(STATE_PARAM_HANDLE_DRAWABLE_RES, handleDrawableRes);
-        bundle.putInt(STATE_PARAM_HANDLE_SIZE, handleSize);
         bundle.putParcelable(STATE_PARAM_SUPER_STATE, super.onSaveInstanceState());
         return bundle;
     }
@@ -108,7 +114,7 @@ public class TriangleView extends View implements OnTriangleChangeListener {
             triangle = bundle.getParcelable(STATE_PARAM_TRIANGLE);
             handleDrawableRes = bundle.getInt(STATE_PARAM_HANDLE_DRAWABLE_RES);
             vertexHandle = ContextCompat.getDrawable(getContext(), handleDrawableRes);
-            handleSize = bundle.getInt(STATE_PARAM_HANDLE_SIZE);
+            setHandleSize(vertexHandle.getIntrinsicHeight());
             state = bundle.getParcelable(STATE_PARAM_SUPER_STATE);
         }
         super.onRestoreInstanceState(state);

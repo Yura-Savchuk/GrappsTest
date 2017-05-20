@@ -5,4 +5,8 @@ package com.coulcod.grappstest.view;
  */
 
 public interface ITrianglePreviewView {
+
+    void updateArea();
+    void setUpdateTimeLeft(long seconds);
+
 }
