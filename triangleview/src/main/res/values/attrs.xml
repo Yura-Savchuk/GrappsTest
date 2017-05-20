@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TriangleView">
+        <attr name="percentagePoint1x" format="float"/>
+        <attr name="percentagePoint1y" format="float"/>
+        <attr name="percentagePoint2x" format="float"/>
+        <attr name="percentagePoint2y" format="float"/>
+        <attr name="percentagePoint3x" format="float"/>
+        <attr name="percentagePoint3y" format="float"/>
+        <attr name="handleDrawable" format="integer"/>
+    </declare-styleable>
+</resources>
